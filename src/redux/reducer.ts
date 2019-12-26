@@ -11,6 +11,7 @@ const SET_IS_FETCHING = 'COMMON/SET_IS_FETCHING';
 
 const initialState:IAppState = {
     totalPrice: 0,
+    selectedFilter: 'All',
     totalQuantity: 0,
     isFetching: false,
     order: [{name: 'one', id: '1'}],

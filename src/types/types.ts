@@ -5,6 +5,7 @@ export interface IOrderItem {
 
 export interface IAppState {
     order: Array<IOrderItem>,
+    selectedFilter: string,
     totalPrice: number,
     totalQuantity: number,
     isFetching: boolean,
