@@ -2,17 +2,15 @@ import React, {Component} from 'react';
 import {compose} from "redux";
 import {connect} from "react-redux";
 import {NavLink, Redirect, Route} from "react-router-dom";
-import {getOrder, getProducts} from "../../Redux/selectors";
-import {AppStateType} from "../../Redux/Store";
+import {getOrder, getProducts} from "../../redux/selectors";
+import {AppStateType} from "../../redux/store";
 import style from './Admin.module.css';
 import ButtonMain from "../../common/Buttons/ButtonMain";
-import {logIn, logOut} from "../../Redux/userReducer";
-import LoginPage from "../Login/Login";
 import AdminProducts from "./pages/AdminProducts";
-import {IProductItem} from "../../../../Core/products-types";
 import {IOrderItem} from "../../types/types";
-import {fetchCatalog} from "../../Redux/productsReducer";
-import {_setProducts} from "../../Redux/adminReducer";
+import LoginPage from "../Login/Login";
+import {logIn, logOut} from "../../redux/authorisation/authReducer";
+import {fetchCatalog} from "../../redux/reducer";
 
 
 interface IConnectProps {

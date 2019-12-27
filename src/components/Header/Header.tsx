@@ -32,7 +32,7 @@ function Header(props:IProps) {
                 </NavLink>
             </div>
             <div className={style.inform}>
-                <span>Мы работаем с пн.-пт. с 8 до 19.00</span>
+                <span>Мы работаем с пн.-пт.</span>
                 <span>+375 (33) 658-02-20</span>
             </div>
         </header>

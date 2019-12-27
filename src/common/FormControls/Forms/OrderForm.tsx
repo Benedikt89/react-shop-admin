@@ -3,6 +3,7 @@ import {Field, reduxForm} from "redux-form";
 import {renderDateTimePicker} from "../DatePicker";
 import React from "react";
 import {DropDownSelect, renderField} from "../FormsControls";
+import {number, required} from "./validators";
 
 const OrderReduxForm = (props:any) => {
     const {handleSubmit, pristine, reset, submitting} = props;

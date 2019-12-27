@@ -4,9 +4,10 @@ import AdminProductItem from "../Components/AdminProductItem";
 import {IProductItem} from "../../../../../Core/products-types";
 import {compose} from "redux";
 import {connect} from "react-redux";
-import {AppStateType} from "../../../Redux/Store";
-import { getProducts} from "../../../Redux/selectors";
-import {_setProducts, deleteProduct, updateProduct} from "../../../Redux/adminReducer";
+import {AppStateType} from "../../../redux/store";
+import {getProducts} from "../../../redux/selectors";
+import {_setProducts, deleteProduct, updateProduct} from "../../../redux/products/admin-products-reducer";
+
 
 interface I_Props {
     products: Array<IProductItem>

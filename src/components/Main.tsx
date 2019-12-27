@@ -8,6 +8,10 @@ import {fetchCatalog, increaseQuantity, decreaseQuantity} from "../redux/reducer
 import {AppStateType} from "../redux/store";
 import '../App.css';
 import style from './Main.module.css';
+import Admin from "./Admin/Admin";
+import {getIsAuth} from "../redux/selectors";
+import LoginPage from "./Login/Login";
+import {logIn} from "../redux/authorisation/authReducer";
 
 interface IProps {
     title?: string
@@ -17,15 +21,24 @@ interface IConnectProps {
     isFetching: boolean,
     totalQuantity: number,
     totalPrice: number,
+    isAuth: boolean,
 }
 
 interface LinkDispatchProps {
     fetchCatalog: () => void;
     increaseQuantity: (count: number) => void;
     decreaseQuantity: (count: number) => void;
+    logIn: (data: any) => void;
 }
 
-class Main extends Component<IProps & IConnectProps & LinkDispatchProps> {
+type MainProps = IProps & IConnectProps & LinkDispatchProps
+
+class Main extends Component<MainProps> {
+    constructor(props: MainProps) {
+        super(props);
+
+    }
+
     componentDidMount() {
         this.props.fetchCatalog();
         //listning for errors
@@ -41,21 +54,14 @@ class Main extends Component<IProps & IConnectProps & LinkDispatchProps> {
     }
 
     render() {
+        let {isFetching, totalQuantity, totalPrice, isAuth} = this.props;
+        const {logIn, fetchCatalog} = this.props;
         return (
             <div>
-                <Header totalQuantity={this.props.totalQuantity} totalPrice={this.props.totalPrice}/>
+                <Header totalQuantity={totalQuantity} totalPrice={totalPrice}/>
+
                 <div className={style.mainWrapper}>
-                    <div>
-                        <span>{this.props.totalQuantity}</span>
-                        <button onClick={() => {
-                            this.props.increaseQuantity(this.props.totalQuantity)
-                        }}>+
-                        </button>
-                        <button onClick={() => {
-                            this.props.decreaseQuantity(this.props.totalQuantity)
-                        }}>-
-                        </button>
-                    </div>
+                    {isAuth ? <Admin/> : <LoginPage logIn={logIn}/>}
                 </div>
                 <Footer/>
 
@@ -67,11 +73,12 @@ class Main extends Component<IProps & IConnectProps & LinkDispatchProps> {
 const mapStateToProps = (state: AppStateType): IConnectProps => {
     return {
         isFetching: state.reducer.isFetching,
+        isAuth: getIsAuth(state),
         totalQuantity: state.reducer.totalQuantity,
         totalPrice: state.reducer.totalPrice,
     }
 };
 export default compose(
     withRouter,
-    connect(mapStateToProps, {fetchCatalog, increaseQuantity, decreaseQuantity})
+    connect(mapStateToProps, {fetchCatalog, increaseQuantity, decreaseQuantity, logIn})
 )(Main);

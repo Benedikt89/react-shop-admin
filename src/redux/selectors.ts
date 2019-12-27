@@ -7,6 +7,7 @@ export const getFilters = (state:AppStateType) => state.products.filters;
 export const getSelectedFilter = (state:AppStateType) => state.reducer.selectedFilter;
 export const getIsFetching = (state:AppStateType) => state.reducer.isFetching;
 export const getOrder = (state:AppStateType) => state.reducer.order;
+export const getIsAuth = (state:AppStateType) => state.auth.isAuth;
 
 export const getProducts = createSelector(_getProducts, getSelectedFilter, (products, selectedFilter) => {
     return products.filter((p:IProductItem) => {
