@@ -30,7 +30,7 @@ export const adminProductsAPI = {
             return testPissas;
         }
     },
-    postProduct (sendData:any) {
+    postProduct (sendData:FormData) {
         return instance.post(`order/`, sendData, {headers: {
             'Content-type': 'multipart/form-data',
         }})

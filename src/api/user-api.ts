@@ -1,4 +1,5 @@
 import axios from "axios";
+import {I_loginInfo} from "../../../Core/users-types";
 
 
 const instance = axios.create({
@@ -7,14 +8,16 @@ const instance = axios.create({
 });
 
 export const authorisationAPI = {
-    async logIn(data:{phone: string, password:string}) {
+    async logIn(data:I_loginInfo) {
         try {
             let res = await instance.post('/login', data);
             if (res.status >= 200) {
                 return res.data;
+            } else {
+                return new Error(res.data.message);
             }
         } catch {
-            return null;
+            return new Error('unknown Error');
         }
     },
     async logOut() {

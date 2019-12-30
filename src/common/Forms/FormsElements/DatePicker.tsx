@@ -2,7 +2,7 @@ import React from 'react';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 
 import 'react-day-picker/lib/style.css';
-import style from './FormControl.module.css';
+import style from '../FormControl.module.css';
 
 import MomentLocaleUtils from 'react-day-picker/moment';
 import 'moment/locale/ru';

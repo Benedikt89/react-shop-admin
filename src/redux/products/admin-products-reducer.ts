@@ -1,6 +1,6 @@
 import {ThunkDispatch} from "redux-thunk";
-import {IFilterItem, IProductItem, IProductToCreate} from "../../../../Core/products-types";
 import {adminProductsAPI} from "../../api/admin-products-api";
+import {IFilterItem, IProductItem, IProductToCreate} from "../../../../Core/products-types";
 
 const SET_PRODUCTS = 'admin/SET_PRODUCTS';
 const DELETE_PRODUCT = 'admin/DELETE_PRODUCT';
@@ -38,7 +38,7 @@ interface I_deleteProductSuccess {
 }
 interface I_createProductSuccess {
     type: typeof CREATE_PRODUCT,
-    product: IProductToCreate
+    product: IProductItem
 }
 interface I_updateProductSuccess {
     type: typeof UPDATE_PRODUCT,
@@ -63,11 +63,19 @@ const adminProductsReducer = (state: I_AdminProductsState = initialState, action
             };
         case CREATE_PRODUCT:
             return {
-                ...state
+                ...state,
+                products: [...state.products, action.product]
             };
         case UPDATE_PRODUCT:
             return {
                 ...state,
+                products: [state.products.map( (p:IProductItem) => {
+                    if (p.id !== action.product.id) {
+                        return p;
+                    } else {
+                        return action.product;
+                    }
+                })]
             };
         default:
             return state;
@@ -94,7 +102,7 @@ export const _setProducts = (products: Array<IProductItem>): I_setProducts => {
         type: SET_PRODUCTS, products
     }
 };
-export const createProduct = (sendData:any) => async (dispatch: ThunkDispatch<{}, {}, adminReducerActions>) => {
+export const createProduct = (sendData:FormData) => async (dispatch: ThunkDispatch<{}, {}, adminReducerActions>) => {
     let created = await adminProductsAPI.postProduct(sendData);
     dispatch(_createProductSuccess(created));
 };

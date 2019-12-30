@@ -2,7 +2,9 @@ import {createSelector} from "reselect";
 import {AppStateType} from "./store";
 import {IProductItem} from "../../../Core/products-types";
 
+// @ts-ignore
 export const _getProducts = (state:AppStateType) => state.products.products;
+// @ts-ignore
 export const getFilters = (state:AppStateType) => state.products.filters;
 export const getSelectedFilter = (state:AppStateType) => state.reducer.selectedFilter;
 export const getIsFetching = (state:AppStateType) => state.reducer.isFetching;

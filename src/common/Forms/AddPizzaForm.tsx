@@ -1,21 +1,11 @@
 import React, {useState} from 'react';
 import {Field, reduxForm} from 'redux-form';
-import {maxLength15, number, required} from "./validators";
+import {maxLength15, number, required} from "./FormsElements/validators";
 
 import 'react-widgets/dist/css/react-widgets.css';
 import style from '../FormControl.module.css';
-import { renderField } from '../FormsControls';
+import { renderField } from './FormsElements/FormsControls';
 
-
-export const UploadFile = (props:any) => {
-    return (
-        <div className={style.item}>
-            <div>
-                <input type={"file"}/>
-            </div>
-        </div>
-    );
-};
 
 const AddPizzaReduxForm = (props: any) => {
     const {handleSubmit, pristine, reset, submitting} = props;

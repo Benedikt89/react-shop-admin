@@ -12,6 +12,7 @@ import Admin from "./Admin/Admin";
 import {getIsAuth} from "../redux/selectors";
 import LoginPage from "./Login/Login";
 import {logIn} from "../redux/authorisation/authReducer";
+import {I_loginInfo} from "../../../Core/users-types";
 
 interface IProps {
     title?: string
@@ -28,7 +29,7 @@ interface LinkDispatchProps {
     fetchCatalog: () => void;
     increaseQuantity: (count: number) => void;
     decreaseQuantity: (count: number) => void;
-    logIn: (data: any) => void;
+    logIn: (data: I_loginInfo) => void;
 }
 
 type MainProps = IProps & IConnectProps & LinkDispatchProps

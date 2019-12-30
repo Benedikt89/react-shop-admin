@@ -1,9 +1,9 @@
 import style from "../FormControl.module.css";
 import {Field, reduxForm} from "redux-form";
-import {renderDateTimePicker} from "../DatePicker";
+import {renderDateTimePicker} from "./FormsElements/DatePicker";
 import React from "react";
-import {DropDownSelect, renderField} from "../FormsControls";
-import {number, required} from "./validators";
+import {DropDownSelect, renderField} from "./FormsElements/FormsControls";
+import {number, required} from "./FormsElements/validators";
 
 const OrderReduxForm = (props:any) => {
     const {handleSubmit, pristine, reset, submitting} = props;

@@ -1,5 +1,6 @@
 import {ThunkDispatch} from "redux-thunk";
 import {authorisationAPI} from "../../api/user-api";
+import {I_loginInfo} from "../../../../Core/users-types";
 
 const LOGIN_SUCCESS = 'users/LOGIN_SUCCESS';
 const LOGOUT_SUCCESS = 'users/LOGOUT_SUCCESS';
@@ -67,9 +68,9 @@ export const logOut = () => async (dispatch: ThunkDispatch<{}, {}, usersReducerA
     await authorisationAPI.logOut();
     dispatch(_logOutSuccess());
 };
-export const logIn = (data:any) => async (dispatch: ThunkDispatch<{}, {}, usersReducerActions>) => {
+export const logIn = (data: I_loginInfo) => async (dispatch: ThunkDispatch<{}, {}, usersReducerActions>) => {
     let res = await authorisationAPI.logIn(data);
-    if(res.userInfo)dispatch(_authorisationSuccess(true, res.userInfo))
+    if(res.userInfo)dispatch(_authorisationSuccess(true, res.userInfo));
     else dispatch(_logOutSuccess());
 };
 

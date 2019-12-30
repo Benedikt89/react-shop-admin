@@ -1,7 +1,5 @@
 import React from 'react';
-
-import 'react-widgets/dist/css/react-widgets.css';
-import style from './FormControl.module.css';
+import style from '../FormControl.module.css';
 
 export interface IrenderFieldProps {
     input:any
