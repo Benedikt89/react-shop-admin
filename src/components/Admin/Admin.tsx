@@ -10,7 +10,7 @@ import AdminProducts from "./pages/AdminProducts";
 import {IOrderItem} from "../../types/types";
 import LoginPage from "../Login/Login";
 import {logIn, logOut} from "../../redux/authorisation/authReducer";
-import {fetchCatalog} from "../../redux/reducer";
+import {fetchProducts} from "../../redux/products/admin-products-reducer";
 
 
 interface IConnectProps {
@@ -22,7 +22,7 @@ interface IConnectProps {
 interface IDispatchProps {
     logIn: (data: any) => void;
     logOut: () => void;
-    fetchCatalog: () => void
+    fetchProducts: () => void
 }
 
 class Admin extends Component<IDispatchProps & IConnectProps> {
@@ -33,7 +33,7 @@ class Admin extends Component<IDispatchProps & IConnectProps> {
 
     render() {
         let {
-            fetchCatalog, isAuth,
+            fetchProducts, isAuth,
             logIn, logOut, userName,
         } = this.props;
 
@@ -53,7 +53,7 @@ class Admin extends Component<IDispatchProps & IConnectProps> {
                         <NavLink to="/admin/order">
                             <ButtonMain buttonText={"Orders"}/>
                         </NavLink>
-                        <ButtonMain buttonText={"Fetch Pizzas"} onClickCallback={fetchCatalog} />
+                        <ButtonMain buttonText={"Fetch Pizzas"} onClickCallback={fetchProducts} />
                     </div>
                     <div>
                         <div>
@@ -77,5 +77,5 @@ const mapStateToProps = (state: AppStateType) => {
 };
 
 export default compose(
-    connect(mapStateToProps, {logIn, logOut, fetchCatalog})
+    connect(mapStateToProps, {logIn, logOut, fetchProducts})
 )(Admin);

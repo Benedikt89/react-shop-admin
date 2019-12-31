@@ -1,6 +1,7 @@
 import {ThunkDispatch} from "redux-thunk";
 import {authorisationAPI} from "../../api/user-api";
 import {I_loginInfo} from "../../../../Core/users-types";
+import {stopSubmit} from "redux-form";
 
 const LOGIN_SUCCESS = 'users/LOGIN_SUCCESS';
 const LOGOUT_SUCCESS = 'users/LOGOUT_SUCCESS';
@@ -69,9 +70,19 @@ export const logOut = () => async (dispatch: ThunkDispatch<{}, {}, usersReducerA
     dispatch(_logOutSuccess());
 };
 export const logIn = (data: I_loginInfo) => async (dispatch: ThunkDispatch<{}, {}, usersReducerActions>) => {
-    let res = await authorisationAPI.logIn(data);
-    if(res.userInfo)dispatch(_authorisationSuccess(true, res.userInfo));
-    else dispatch(_logOutSuccess());
+    try {
+        let res = await authorisationAPI.logIn(data);
+        if (res.statusCode === 0) {
+            dispatch(_authorisationSuccess(true, res.userInfo ? res.userInfo : 'name do not exist'));
+        } else {
+            let message = res.message.length > 0 ? res.message : "some error";
+            dispatch(stopSubmit('logIn', {_error: message}))
+        }
+    } catch (e) {
+        console.log(e);
+        let message = e.message.length > 0 ? e.message[0] : "some error";
+        dispatch(stopSubmit('logIn', {_error: message}))
+    }
 };
 
 export default authorisationReducer;

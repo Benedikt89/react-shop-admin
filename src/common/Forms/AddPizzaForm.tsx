@@ -2,12 +2,12 @@ import React, {useState} from 'react';
 import {Field, reduxForm} from 'redux-form';
 import {maxLength15, number, required} from "./FormsElements/validators";
 
-import 'react-widgets/dist/css/react-widgets.css';
-import style from '../FormControl.module.css';
+import style from './FormControl.module.css';
 import { renderField } from './FormsElements/FormsControls';
+import FieldFileInput from "./FormsElements/ImageField";
 
 
-const AddPizzaReduxForm = (props: any) => {
+const AddProductReduxForm = (props: any) => {
     const {handleSubmit, pristine, reset, submitting} = props;
     const filters = [{name: "Big"},{name: "All"}];
 
@@ -21,16 +21,22 @@ const AddPizzaReduxForm = (props: any) => {
             {/*       validate={[number]}*/}
             {/*       warn={required}*/}
             {/*/>*/}
+            <Field name="photo"
+                   type="file"
+                   component={FieldFileInput}
+                   label="image"
+                   validate={[required]}
+            />
             <Field name="name"
                    type="text"
                    component={renderField}
-                   label="name *"
+                   label="название"
                    validate={[required, maxLength15]}
             />
             <Field name="price"
                    type="number"
                    component={renderField}
-                   label="price"
+                   label="цена"
                    validate={[required, number]}
                    warn={required}
             />
@@ -64,4 +70,4 @@ const AddPizzaReduxForm = (props: any) => {
     )
 };
 
-export default reduxForm({form: 'addPizza'})(AddPizzaReduxForm)
+export default reduxForm({form: 'addPizza'})(AddProductReduxForm)

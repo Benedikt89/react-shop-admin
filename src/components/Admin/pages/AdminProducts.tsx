@@ -6,8 +6,13 @@ import {compose} from "redux";
 import {connect} from "react-redux";
 import {AppStateType} from "../../../redux/store";
 import {getProducts} from "../../../redux/selectors";
-import {_setProducts, deleteProduct, updateProduct} from "../../../redux/products/admin-products-reducer";
-
+import {
+    _setProducts,
+    createProduct,
+    deleteProduct,
+    updateProduct
+} from "../../../redux/products/admin-products-reducer";
+import AddProductReduxForm from "./../../../common/Forms/AddPizzaForm"
 
 interface I_Props {
     products: Array<IProductItem>
@@ -16,18 +21,23 @@ interface I_DispatchProps {
     _setProducts: (products: Array<IProductItem>)=> void
     deleteProduct: (productId: string)=> void
     updateProduct: (product: IProductItem)=> void
+    createProduct: any
 }
 
-const AdminProducts = ({products, deleteProduct, updateProduct}:I_Props & I_DispatchProps) => {
+const AdminProducts = ({products, deleteProduct, updateProduct, createProduct}:I_Props & I_DispatchProps) => {
     let existProducts = products.map((item)=>{
-        return <AdminProductItem product={item} remove={deleteProduct} updateProduct={updateProduct} />
+        return <AdminProductItem key={item.id} product={item} remove={deleteProduct} updateProduct={updateProduct} />
     });
     let [newProductExpanded, setNewProductExpanded] = useState(false);
+
+    const onProductSubmit = (formData: any) => {
+        createProduct(formData)
+    };
 
     return (
         <div className={style.col}>
             <span onClick={()=>{setNewProductExpanded(true)}}>add new pizza</span>
-            {newProductExpanded && <div>asasdd</div>}
+            {newProductExpanded && <AddProductReduxForm onSubmit={onProductSubmit}/>}
             {existProducts}
         </div>
     )
@@ -40,5 +50,5 @@ const mapStateToProps = (state: AppStateType) => {
 };
 
 export default compose(
-    connect(mapStateToProps, {_setProducts, deleteProduct, updateProduct})
+    connect(mapStateToProps, {_setProducts, deleteProduct, updateProduct, createProduct})
 )(AdminProducts);

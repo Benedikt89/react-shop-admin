@@ -8,16 +8,19 @@ const instance = axios.create({
 });
 
 export const authorisationAPI = {
-    async logIn(data:I_loginInfo) {
+    async logIn(data: I_loginInfo) {
         try {
             let res = await instance.post('/login', data);
-            if (res.status >= 200) {
-                return res.data;
+            return res.data;
+        } catch (e) {
+            if (e instanceof EvalError) {
+                console.log('network Error')
+            } else if (e instanceof RangeError) {
+                console.log(e.name + ': ' + e.message);
             } else {
-                return new Error(res.data.message);
+                console.log(e);
+                return e
             }
-        } catch {
-            return new Error('unknown Error');
         }
     },
     async logOut() {
@@ -27,7 +30,7 @@ export const authorisationAPI = {
                 return res.data;
             }
         } catch {
-            return ;
+            return new Error('unknown Error');
         }
     },
 };

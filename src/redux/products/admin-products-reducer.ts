@@ -102,7 +102,16 @@ export const _setProducts = (products: Array<IProductItem>): I_setProducts => {
         type: SET_PRODUCTS, products
     }
 };
+
+export const fetchProducts = () => async (dispatch: ThunkDispatch<{}, {}, adminReducerActions>) => {
+    let res = await adminProductsAPI.getProducts();
+    dispatch(_setProducts(res));
+};
+
 export const createProduct = (sendData:FormData) => async (dispatch: ThunkDispatch<{}, {}, adminReducerActions>) => {
+    debugger;
+    let ad = new FormData();
+    ad.append('image', sendData.photo);
     let created = await adminProductsAPI.postProduct(sendData);
     dispatch(_createProductSuccess(created));
 };
@@ -111,6 +120,7 @@ export const deleteProduct = (productId: string) => async (dispatch: ThunkDispat
     dispatch(_deleteProductSuccess(productId));
 };
 export const updateProduct = (product: IProductItem) => async (dispatch: ThunkDispatch<{}, {}, adminReducerActions>) => {
+    alert('upt')
     let result = await adminProductsAPI.putProduct(product);
     dispatch(_updateProductSuccess(result))
 };
