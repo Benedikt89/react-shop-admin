@@ -12,21 +12,32 @@ export const authorisationAPI = {
         try {
             let res = await instance.post('/login', data);
             return res.data;
-        } catch (e) {
-            if (e instanceof EvalError) {
-                console.log('network Error')
-            } else if (e instanceof RangeError) {
-                console.log(e.name + ': ' + e.message);
+        } catch (error) {
+            if (error.response) {
+                // The request was made and the server responded with a status code
+                // that falls out of the range of 2xx
+                console.log(error.response.data);
+                console.log(error.response.status);
+                console.log(error.response.headers);
+                if (error.response.data.message) {
+                    return error.response.data
+                }
+            } else if (error.request) {
+                // The request was made but no response was received
+                // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+                // http.ClientRequest in node.js
+                console.log(error.request);
             } else {
-                console.log(e);
-                return e
+                // Something happened in setting up the request that triggered an Error
+                console.log('Error', error.message);
             }
+            console.log(error.config);
         }
     },
     async logOut() {
         try {
             let res = await instance.delete('/logout');
-            if (res.status >= 200) {
+            if (res.status >= 200 && res.status < 300) {
                 return res.data;
             }
         } catch {

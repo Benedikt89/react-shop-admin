@@ -21,8 +21,10 @@ export const adminProductsAPI = {
     async getProducts() {
         try {
             let res = await instance.get('/');
-            if (res.status === 200) {
+            if (res.status >= 200 && res.status < 300) {
                 return res.data.products;
+            } else {
+                return testPissas;
             }
         } catch {
             return testPissas;
@@ -39,7 +41,7 @@ export const adminProductsAPI = {
             return testPissas;
         }
     },
-    postProduct(sendData: FormData) {
+    postProduct(sendData: any) {
         return instance.post(`/`, sendData, {
             headers: {
                 'Content-type': 'multipart/form-data',
