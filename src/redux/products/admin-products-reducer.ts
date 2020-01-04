@@ -108,10 +108,14 @@ export const fetchProducts = () => async (dispatch: ThunkDispatch<{}, {}, adminR
     dispatch(_setProducts(res));
 };
 
-export const createProduct = (sendData:FormData) => async (dispatch: ThunkDispatch<{}, {}, adminReducerActions>) => {
-    debugger;
-    let ad = new FormData();
-    ad.append('image', sendData.photo);
+export const createProduct = (commonData:any) => async (dispatch: ThunkDispatch<{}, {}, adminReducerActions>) => {
+    let sendData = new FormData();
+    sendData.append('name', commonData.name);
+    sendData.append('price', commonData.price);
+    sendData.append('size', commonData.size);
+    sendData.append('text_long', commonData.text_long);
+    sendData.append('text_short', commonData.text_short);
+    sendData.append('image', commonData.photo);
     let created = await adminProductsAPI.postProduct(sendData);
     dispatch(_createProductSuccess(created));
 };
@@ -120,7 +124,7 @@ export const deleteProduct = (productId: string) => async (dispatch: ThunkDispat
     dispatch(_deleteProductSuccess(productId));
 };
 export const updateProduct = (product: IProductItem) => async (dispatch: ThunkDispatch<{}, {}, adminReducerActions>) => {
-    alert('upt')
+    alert('upt');
     let result = await adminProductsAPI.putProduct(product);
     dispatch(_updateProductSuccess(result))
 };
