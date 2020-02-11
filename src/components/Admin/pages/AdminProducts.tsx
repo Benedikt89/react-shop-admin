@@ -1,7 +1,7 @@
 import style from "../Admin.module.css";
 import React, {useState} from "react";
 import AdminProductItem from "../Components/AdminProductItem";
-import {IProductItem} from "../../../../../Core/products-types";
+import {I_productItem} from "../../../../../Core/products-types";
 import {compose} from "redux";
 import {connect} from "react-redux";
 import {AppStateType} from "../../../redux/store";
@@ -15,12 +15,12 @@ import {
 import AddProductReduxForm from "./../../../common/Forms/AddPizzaForm"
 
 interface I_Props {
-    products: Array<IProductItem>
+    products: Array<I_productItem>
 }
 interface I_DispatchProps {
-    _setProducts: (products: Array<IProductItem>)=> void
+    _setProducts: (products: Array<I_productItem>)=> void
     deleteProduct: (productId: string)=> void
-    updateProduct: (product: IProductItem)=> void
+    updateProduct: (product: I_productItem)=> void
     createProduct: any
 }
 

@@ -1,5 +1,5 @@
 import React from "react";
-import style from './FormControl.module.css';
+import style from './Forms.module.css';
 import {Field, reduxForm} from "redux-form";
 import {renderField} from "./FormsElements/FormsControls";
 import {maxLength15, minLength4, required} from "./FormsElements/validators";

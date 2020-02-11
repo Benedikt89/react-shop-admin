@@ -1,6 +1,6 @@
 import {ThunkDispatch} from "redux-thunk";
 import {adminProductsAPI} from "../../api/admin-products-api";
-import {IFilterItem, IProductItem, IProductToCreate} from "../../../../Core/products-types";
+import {I_filterItem, I_productItem, I_productToCreate} from "../../../../Core/products-types";
 
 const SET_PRODUCTS = 'admin/SET_PRODUCTS';
 const DELETE_PRODUCT = 'admin/DELETE_PRODUCT';
@@ -9,8 +9,8 @@ const UPDATE_PRODUCT = 'admin/UPDATE_PRODUCT';
 
 
 interface I_AdminProductsState {
-    products: Array<IProductItem>,
-    filters: Array<IFilterItem>
+    products: Array<I_productItem>,
+    filters: Array<I_filterItem>
 }
 
 const initialState: I_AdminProductsState = {
@@ -38,15 +38,15 @@ interface I_deleteProductSuccess {
 }
 interface I_createProductSuccess {
     type: typeof CREATE_PRODUCT,
-    product: IProductItem
+    product: I_productItem
 }
 interface I_updateProductSuccess {
     type: typeof UPDATE_PRODUCT,
-    product: IProductItem
+    product: I_productItem
 }
 interface I_setProducts {
     type: typeof SET_PRODUCTS,
-    products: Array<IProductItem>
+    products: Array<I_productItem>
 }
 
 const adminProductsReducer = (state: I_AdminProductsState = initialState, action: adminReducerActions) => {
@@ -69,7 +69,7 @@ const adminProductsReducer = (state: I_AdminProductsState = initialState, action
         case UPDATE_PRODUCT:
             return {
                 ...state,
-                products: [state.products.map( (p:IProductItem) => {
+                products: [state.products.map( (p:I_productItem) => {
                     if (p.id !== action.product.id) {
                         return p;
                     } else {
@@ -87,17 +87,17 @@ export const _deleteProductSuccess = (productId: string): I_deleteProductSuccess
         type: DELETE_PRODUCT, productId
     }
 };
-export const _createProductSuccess = (product: IProductItem): I_createProductSuccess => {
+export const _createProductSuccess = (product: I_productItem): I_createProductSuccess => {
     return {
         type: CREATE_PRODUCT, product
     }
 };
-export const _updateProductSuccess = (product: IProductItem): I_updateProductSuccess => {
+export const _updateProductSuccess = (product: I_productItem): I_updateProductSuccess => {
     return {
         type: UPDATE_PRODUCT, product
     }
 };
-export const _setProducts = (products: Array<IProductItem>): I_setProducts => {
+export const _setProducts = (products: Array<I_productItem>): I_setProducts => {
     return {
         type: SET_PRODUCTS, products
     }
@@ -123,7 +123,7 @@ export const deleteProduct = (productId: string) => async (dispatch: ThunkDispat
     let deleted = await adminProductsAPI.deleteProduct(productId);
     dispatch(_deleteProductSuccess(productId));
 };
-export const updateProduct = (product: IProductItem) => async (dispatch: ThunkDispatch<{}, {}, adminReducerActions>) => {
+export const updateProduct = (product: I_productItem) => async (dispatch: ThunkDispatch<{}, {}, adminReducerActions>) => {
     alert('upt');
     let result = await adminProductsAPI.putProduct(product);
     dispatch(_updateProductSuccess(result))

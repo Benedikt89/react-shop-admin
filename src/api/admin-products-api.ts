@@ -1,14 +1,14 @@
 import axios from "axios";
-import {IProductItem} from "../../../Core/products-types";
+import {I_productItem} from "../../../Core/products-types";
 
-const testPissas = {status: 404, message: 'notFound'};
+const testProducts = {status: 404, message: 'notFound'};
 
 const instance = axios.create({
     baseURL: "http://127.0.0.1:8000/api/pizzas",
     withCredentials: true
 });
 
-interface IcreateProduct {
+interface I_createProduct {
     name: string
     photo: File
     price: string
@@ -24,10 +24,10 @@ export const adminProductsAPI = {
             if (res.status >= 200 && res.status < 300) {
                 return res.data.products;
             } else {
-                return testPissas;
+                return testProducts;
             }
         } catch {
-            return testPissas;
+            return testProducts;
         }
     },
 
@@ -38,7 +38,7 @@ export const adminProductsAPI = {
                 return res.data;
             }
         } catch (e) {
-            return testPissas;
+            return testProducts;
         }
     },
     postProduct(sendData: any) {
@@ -52,7 +52,7 @@ export const adminProductsAPI = {
                 return res.data
             })
     },
-    putProduct(product: IProductItem) {
+    putProduct(product: I_productItem) {
         return instance.put(`/`, product)
             .then(res => {
                 if (res.status >= 200) {

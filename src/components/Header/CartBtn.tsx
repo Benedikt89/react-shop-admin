@@ -7,11 +7,9 @@ interface IProps {
     totalPrice: number
 }
 
-function CartBtn({totalQuantity, totalPrice}:IProps) {
+const CartBtn:React.FC<IProps> = React.memo(({totalQuantity, totalPrice}:IProps) => {
 
     return (
-
-        <div>
             <NavLink to="/cart" className={style.cartBtnWrapper}>
                 <div className={style.cartName}>
                     <span>Корзина</span>
@@ -20,8 +18,7 @@ function CartBtn({totalQuantity, totalPrice}:IProps) {
                     <span>{totalQuantity}</span>
                 </div>
             </NavLink>
-        </div>
     );
-}
+});
 
 export default CartBtn;

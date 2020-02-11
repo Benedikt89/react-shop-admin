@@ -1,4 +1,4 @@
-import {IAppState} from "../types/types";
+import {I_AppState} from "../types/types";
 import {Dispatch} from "redux";
 import {counterApi} from "../api/api";
 import {AppStateType} from "./store";
@@ -9,7 +9,7 @@ const DECREASE_QUANTITY = 'PRODUCTS/DECREASE_QUANTITY';
 const SET_ORDER_SUCCESS = 'ORDER/SET_ORDER_SUCCESS';
 const SET_IS_FETCHING = 'COMMON/SET_IS_FETCHING';
 
-const initialState:IAppState = {
+const initialState:I_AppState = {
     totalPrice: 0,
     selectedFilter: 'All',
     totalQuantity: 0,
@@ -20,7 +20,7 @@ const initialState:IAppState = {
 type IActions = I_increaseQuantity | I_decreaseQuantity | I_orderSuccess | I_toggleIsFetching
 type GetStateType = () => AppStateType
 
-const reducer = (state:IAppState = initialState, action:IActions) => {
+const reducer = (state:I_AppState = initialState, action:IActions) => {
     switch (action.type) {
         //setting fetching status
         case SET_IS_FETCHING:

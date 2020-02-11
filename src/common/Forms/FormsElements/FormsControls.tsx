@@ -1,54 +1,87 @@
 import React from 'react';
-import style from '../FormControl.module.css';
+import {createTextMask} from 'redux-form-input-masks';
+import classNames from 'classnames/bind';
+import style from './FormControl.module.css';
+import {Alert, Popover} from "antd";
 
-export interface IrenderFieldProps {
-    input:any
-    label: string
-    type: string
-    meta: any
+export const phoneMask = createTextMask({
+    pattern: '8-(099) 999-9999',
+});
+
+interface I_meta {
+    touched: boolean,
+    error: string | undefined,
+    warning: string | undefined
 }
 
-export const renderField = ({input, label, type, meta: {touched, error, warning}}:IrenderFieldProps) => {
-    let classForField = () => {
-        if(touched) {
-            return style.fieldWrapper + ' ' + (error && touched ? style.error : style.success)
-        } else {
-            return style.fieldWrapper;
-        }
-    };
+interface I_renderFieldProps {
+    input: any
+    label: string
+    type: string
+    meta: I_meta
+}
+
+interface I_renderFormWrapperProps {
+    label: string
+    required: boolean
+    meta: I_meta
+    children: any
+}
+
+interface I_renderDropDownProps extends I_renderFieldProps {
+    times: string[]
+}
+
+export const ReduxFormWrapper = ({
+                                     label, required,
+                                     meta: { touched, error, warning },
+                                     children
+                                 }: I_renderFormWrapperProps) => {
+    let cx = classNames.bind(style);
+    let classForField = cx(style.fieldWrapper, {
+        success: touched && !error && !warning,
+        error: error && touched,
+    });
+
     return (
-    <div>
-        <label>{label}</label>
-        <div className={classForField()}>
-            <input {...input} type={type}/>
-            {touched &&
-            ((error && <span className={style.errorMessage}>{error}</span>)
-                || (warning && <span className={style.errorMessage}>{warning}</span>))}
+        <div className={classForField}>
+            <span className={required ? style.titleRequired : style.title}>{label}</span>
+            <Popover
+                content={<Alert message={error} type="error"/>}
+                visible={!!(touched && error)}
+                placement="rightTop">
+
+                {children}
+            </Popover>
         </div>
-    </div>
-)};
+    )
+};
 
-export const DropDownSelect = ({input, label, times, meta: {touched, error, warning}}: any) => {
+export const renderField = ({input, label, type, meta}: any) => {
+    return (
+        <ReduxFormWrapper required={type !== "radio"} label={label} meta={meta}>
+            <input {...input} type={type}/>
+        </ReduxFormWrapper>
+    )
+};
 
+export const RenderTextarea = ({input, label, type, meta}: any, ...props: any) => {
+    return (
+        <ReduxFormWrapper required={false} label={label} meta={meta}>
+            <textarea {...input} type={type}/>
+        </ReduxFormWrapper>
+    )
+};
+export const DropDownSelect = ({input, label, times, meta}: I_renderDropDownProps) => {
     const renderSelectOptions = (option: string, index: number) => (
         <option key={option} value={index}>{option}</option>
     );
-
     return (
-        <div>
-            <label>{label}</label>
-            <div className={style.fieldWrapper}>
-                <select {...input}>
-                    <option value="">Select</option>
-                    {times.map(renderSelectOptions)}
-                </select>
-                {touched &&
-                ((error && <span className={style.errorMessage}>{error}</span>)
-                    || (warning && <span className={style.errorMessage}>{warning}</span>))}
-            </div>
-        </div>
+        <ReduxFormWrapper required={true} label={label} meta={meta}>
+            <select {...input}>
+                <option value={""}>Select</option>
+                {times.map(renderSelectOptions)}
+            </select>
+        </ReduxFormWrapper>
     );
 };
-
-
-

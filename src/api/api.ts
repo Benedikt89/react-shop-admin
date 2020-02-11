@@ -5,7 +5,7 @@ const instance = axios.create({
     withCredentials: true
 });
 
-interface Icounter {
+interface I_counter {
     data: {
         count: string
     }
@@ -35,9 +35,9 @@ export const counterApi = {
             })
     },
     async decreaseCount (quan:number) {
-        const response =  await instance.get<Icounter>('count');
         try {
-            const res = await instance.patch('count', {count: quan -1 })
+            const response =  await instance.get<I_counter>('count');
+            const res = await instance.patch('count', {count: quan -1 });
             return res.data
         } catch (e) {
             return "0"

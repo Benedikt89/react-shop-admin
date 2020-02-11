@@ -1,12 +1,12 @@
 import {binaryExpression} from "@babel/types";
 
-export interface IOrderItem {
+export interface I_orderItem {
     id: string,
     name: string,
 }
 
-export interface IAppState {
-    order: Array<IOrderItem>,
+export interface I_AppState {
+    order: Array<I_orderItem>,
     selectedFilter: string,
     totalPrice: number,
     totalQuantity: number,

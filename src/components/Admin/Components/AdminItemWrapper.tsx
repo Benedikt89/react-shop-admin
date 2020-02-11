@@ -1,23 +1,21 @@
 import style from "../Admin.module.css";
 import React from "react";
-import {IFilterItem, IProductItem} from "../../../../../Core/products-types";
+import {I_filterItem, I_productItem} from "../../../../../Core/products-types";
 import {I_OrderItem} from "../../../../../Core/orders-types";
 
 
 interface IAdminItemProps {
-    item: IProductItem | I_OrderItem,
+    item: I_productItem | I_OrderItem,
     remove: (itemId: string) => void;
-    Component: React.Component
+    children: React.Component
 }
 
-const AdminItemWrapper = ({item, remove, Component}: IAdminItemProps) => {
+const AdminItemWrapper = ({item, remove, children}: IAdminItemProps) => {
     class DeleteComponent extends React.Component {
         render() {
             return (
                 <div className={style.deleteWrapper}>
-                    {/*
-                    // @ts-ignore*/}
-                    <Component {...this.props} />
+                    {children}
                     <button
                         onClick={() => {
                             remove(item.id)
